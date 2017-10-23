@@ -22,12 +22,13 @@
             var img = null; 
             $('#selectImg').change(function(e){
                 img = e.target.files[0];
+                console.log(img);
                 // 判断是否图片  
                 if(!img){  
                     return ;  
                 }
                 // 判断图片格式  
-                if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jepg|gif)$/.test(img.name.toLowerCase())) ){  
+                if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jpeg|gif|jpg)$/.test(img.name.toLowerCase())) ){  
                     alert('图片只能是jpg,gif,png,gif');  
                     return ;
                 }
