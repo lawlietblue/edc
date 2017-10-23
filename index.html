@@ -39,11 +39,21 @@
                 reader.readAsDataURL(img);
             });
             $("#upload").on("click touchend",function(){
-                alert(1);
-                if (!img) return;
+                // 判断是否图片  
+                if(!img){  
+                    return ;  
+                }
+                // 判断图片格式  
+                if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jepg|gif)$/.test(img.name.toLowerCase())) ){  
+                    alert('图片只能是jpg,gif,png,gif');  
+                    return ;
+                }
                 var formData = new FormData();
+                
                 formData.append("file", img);
                 formData.append("appId",'edc');
+                formData.append("tenantId", 'imgtest');
+
                 $.ajax({
                     type:"post",
                     url:"http://192.168.1.158:8088/file/batchUpload",
