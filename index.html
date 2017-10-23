@@ -40,14 +40,14 @@
             });
             $("#upload").on("click touchend",function(){
                 // 判断是否图片  
-                if(!img){  
-                    return ;  
-                }
-                // 判断图片格式  
-                if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jepg|gif)$/.test(img.name.toLowerCase())) ){  
-                    alert('图片只能是jpg,gif,png,gif');  
-                    return ;
-                }
+                // if(!img){  
+                //     return ;  
+                // }
+                // // 判断图片格式  
+                // if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jepg|gif)$/.test(img.name.toLowerCase())) ){  
+                //     alert('图片只能是jpg,gif,png,gif');  
+                //     return ;
+                // }
                 var formData = new FormData();
                 
                 formData.append("file", img);
@@ -71,7 +71,7 @@
                         alert('上传成功, 地址是：' + result.data[0].filePath);
                     },
                     error:function (error) {
-                        console.log(error);
+                        alert(error);
                     }
                 });
             });
