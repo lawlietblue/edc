@@ -5,8 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>拍照上传</title>
+    <style type="text/css">
+        img {
+            width: 70%;
+            height: 30%;
+        }
+    </style>
 </head>
 <body>
-    <input type="file" accept="image/*;capture=camera">
+    <input type="file" accept="image/*;capture=camera" id="selectImg" >
+    <div id="showImg"></div>
+    <button id="upload">确认上传</button>
+    <script src="./jquery-2.2.4.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var img = null; 
+            $('#selectImg').change(function(e){
+                img = e.target.files[0];
+                // 判断是否图片  
+                if(!img){  
+                    return ;  
+                }
+                // 判断图片格式  
+                if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jepg|gif)$/.test(img.name.toLowerCase())) ){  
+                    alert('图片只能是jpg,gif,png,gif');  
+                    return ;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#showImg').append(`<img src="${e.target.result}" >`);
+                };
+                reader.readAsDataURL(img);
+            });
+            $("#upload").click(function(){
+                if (!img) return;
+                var formData = new FormData();
+                formData.append("file", img);
+                formData.append("appId",'edc');
+                $.ajax({
+                    type:"post",
+                    url:"http://192.168.1.158:8088/file/batchUpload",
+                    /*headers:{
+                        'content-type':'multipart/form-data'
+                    },*/
+                    //dataType:"json",
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    timeout:1200000,
+                    success:function (result) {
+                        alert('上传成功, 地址是：' + result.data[0].filePath);
+                    },
+                    error:function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
