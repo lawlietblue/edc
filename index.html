@@ -38,7 +38,7 @@
                 };
                 reader.readAsDataURL(img);
             });
-            $("#upload").click(function(){
+            $("#upload").on("click touchend",function(){
                 alert(1);
                 if (!img) return;
                 var formData = new FormData();
